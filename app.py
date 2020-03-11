@@ -1,3 +1,4 @@
+# Dependencies
 import numpy as np
 import pandas as pd
 import datetime as dt
@@ -7,6 +8,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, inspect
 from flask import Flask, jsonify
 
+# Creates engine and connection to database in use
 engine = create_engine("sqlite:///Resources/hawaii.sqlite", connect_args={'check_same_thread': False})
 
 Base = automap_base()
@@ -15,11 +17,14 @@ Measurement = Base.classes.measurement
 Station = Base.classes.station
 session = Session(engine)
 
+# Global variables for use in later queries
 year_ago = '2016-08-23'
 most_active_station = 'USC00519281'
 
+# Creation of flask app
 app = Flask(__name__)
 
+# Landing page for app
 @app.route("/")
 def welcome():
     return (
@@ -71,5 +76,6 @@ def temps(date1, date2):
     
     return jsonify(dates_tob_data)
 
+# Debugger
 if __name__ == "__main__":
     app.run(debug=True)
